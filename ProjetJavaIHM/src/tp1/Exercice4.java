@@ -14,7 +14,8 @@ public final class Exercice4 extends javax.swing.JFrame {
     public enum Etat {E1, E2, E3};
     public Etat etat;
     public int compteur;
-    public Thread t1;
+    public Thread tinc;
+    public Thread tdec;
     
     /**
      * Creates new form Exercice1
@@ -46,31 +47,39 @@ public final class Exercice4 extends javax.swing.JFrame {
         this.jButton4.setEnabled(true);
     }
     
-    public void IncrementCompteur() {
-         /*if(compteur < 3){
-            etat = E2();
-            try {
-                compteur++;
-                jLabel1.setText(Integer.toString(compteur));
-                Thread.sleep (1000);
-            }catch (InterruptedException e) { 
-                System.out.print("erreur");
+    public void DestroyAllThreadsIfExists(){
+        if(this.tinc != null){
+            if(tinc.isAlive()){
+                tinc.suspend();
             }
-        } else {
-            etat = E1();
-            jLabel1.setText("POUF");
-        }*/
-       
-        etat = E2();
-        for (int i=0;i<4;i++){
+        }
+        if(this.tdec != null){
+            if(tdec.isAlive()){
+                tdec.suspend();
+            }
+        }
+    }
+    
+    public void IncrementCompteur() {       
+        while(true){
             try {
-                this.jLabel1.setText(Integer.toString(i));
+                this.jLabel1.setText(Integer.toString(compteur++));
                 Thread.sleep (1000);
             }catch (InterruptedException e) { 
                 System.out.print("erreur");
             }
         }
-        etat = E1();
+    }
+    
+    public void DecrementeCompteur() {    
+        do {
+            try {
+                this.jLabel1.setText(Integer.toString(compteur--));
+                Thread.sleep (1000);
+            }catch (InterruptedException e) { 
+                System.out.print("erreur");
+            }
+        } while(compteur > 0);
         jLabel1.setText("POUF");
     }
 
@@ -163,6 +172,13 @@ public final class Exercice4 extends javax.swing.JFrame {
             case E1 :
                 etat = Etat.E2;
                 PresentationE2();
+                tinc = new Thread(new Runnable() {
+                    public void run() {
+                        IncrementCompteur();
+                    }
+                });  
+                tinc.start();
+                
                 break;
             case E2 :
                 break;
@@ -177,6 +193,16 @@ public final class Exercice4 extends javax.swing.JFrame {
             case E1 :
                 break;
             case E2 :
+                etat = Etat.E3;
+                PresentationE3();
+                DestroyAllThreadsIfExists();
+                tdec = new Thread(new Runnable() {
+                    public void run() {
+                         DecrementeCompteur();
+                    }
+                });  
+                tdec.start();
+                
                 break;
             case E3 :
                 break;
@@ -191,6 +217,16 @@ public final class Exercice4 extends javax.swing.JFrame {
             case E2 :
                 break;
             case E3 :
+                etat = Etat.E2;
+                PresentationE2();
+                DestroyAllThreadsIfExists();
+                tinc = new Thread(new Runnable() {
+                    public void run() {
+                         IncrementCompteur();
+                    }
+                });  
+                tinc.start();
+                
                 break;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -209,6 +245,9 @@ public final class Exercice4 extends javax.swing.JFrame {
                 PresentationE1();
                 break;
         }
+        
+        DestroyAllThreadsIfExists();
+        jLabel1.setText("POUF");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
