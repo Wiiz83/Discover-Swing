@@ -5,17 +5,17 @@
  */
 package tp1;
 
-/**
- *
- * @author uzanl
- */
+import javax.swing.Timer;
+
 public final class Exercice4 extends javax.swing.JFrame {
 
     public enum Etat {E1, E2, E3};
+    private int i;
     public Etat etat;
     public int compteur;
-    public Thread tinc;
-    public Thread tdec;
+    
+    private final Timer timerPlusUn = new Timer(1000, this::timerPlusUnActionPerformed);
+    private final Timer timerMoinsUn = new Timer(1000, this::timerMoinsUnActionPerformed);
     
     /**
      * Creates new form Exercice1
@@ -24,6 +24,8 @@ public final class Exercice4 extends javax.swing.JFrame {
         initComponents();
         etat = Etat.E1;
         PresentationE1();
+        initialiserEtat();
+        initialiserCompteur();
     }
 
     public void PresentationE1() {
@@ -31,6 +33,8 @@ public final class Exercice4 extends javax.swing.JFrame {
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);
+        timerPlusUn.stop();
+        timerMoinsUn.stop();
     }
 
     public void PresentationE2() {
@@ -38,6 +42,8 @@ public final class Exercice4 extends javax.swing.JFrame {
         this.jButton2.setEnabled(true);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(true);
+        timerMoinsUn.stop();
+        timerPlusUn.start();
     }
     
     public void PresentationE3() {
@@ -45,43 +51,79 @@ public final class Exercice4 extends javax.swing.JFrame {
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(true);
         this.jButton4.setEnabled(true);
+        timerMoinsUn.start();
+        timerPlusUn.stop();
     }
     
-    public void DestroyAllThreadsIfExists(){
-        if(this.tinc != null){
-            if(tinc.isAlive()){
-                tinc.suspend();
-            }
-        }
-        if(this.tdec != null){
-            if(tdec.isAlive()){
-                tdec.suspend();
-            }
-        }
+    
+    private void initialiserEtat() {
+        i = 0;
     }
     
-    public void IncrementCompteur() {       
-        while(true){
-            try {
-                this.jLabel1.setText(Integer.toString(compteur++));
-                Thread.sleep (1000);
-            }catch (InterruptedException e) { 
-                System.out.print("erreur");
-            }
-        }
+    private void initialiserCompteur() {
+        compteur = 0;
     }
     
-    public void DecrementeCompteur() {    
-        do {
-            try {
-                this.jLabel1.setText(Integer.toString(compteur--));
-                Thread.sleep (1000);
-            }catch (InterruptedException e) { 
-                System.out.print("erreur");
-            }
-        } while(compteur > 0);
-        jLabel1.setText("POUF");
+    private void incrementerEtat() {
+        i++;
     }
+    
+    private void incrementerCompteur (){
+        compteur ++;
+    }
+    
+    private void decrementerEtat() {
+        i--;
+    }
+    
+    private void decrementerCompteur (){
+        compteur --;
+    }
+    
+    private void afficherPouf() {
+        jLabel1.setText("Pouf");
+    }
+    
+    private void afficherCompteur() {
+        jLabel1.setText(compteur+"");
+    }
+    
+    private void timerPlusUnActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        switch (etat ) {
+            case E1:
+                //interdit
+                break;
+            case E2:
+                incrementerCompteur();
+                incrementerEtat();
+                afficherCompteur();
+                break;
+            case E3:
+                //interdit
+                break;
+        }         
+    }  
+    
+    private void timerMoinsUnActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        switch (etat ) {
+            case E1:
+                //interdit
+                break;
+            case E2:
+                //interdit
+                break;
+            case E3 :
+                decrementerCompteur();
+                decrementerEtat();
+                if (i < 0) {
+                    etat = Etat.E1;
+                    PresentationE1();
+                } else {
+                    afficherCompteur();
+                }
+                break;
+        }
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,7 +156,7 @@ public final class Exercice4 extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("0");
 
         jButton3.setText(">>");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -172,13 +214,9 @@ public final class Exercice4 extends javax.swing.JFrame {
             case E1 :
                 etat = Etat.E2;
                 PresentationE2();
-                tinc = new Thread(new Runnable() {
-                    public void run() {
-                        IncrementCompteur();
-                    }
-                });  
-                tinc.start();
-                
+                initialiserEtat();
+                initialiserCompteur();
+                afficherCompteur();
                 break;
             case E2 :
                 break;
@@ -194,15 +232,7 @@ public final class Exercice4 extends javax.swing.JFrame {
                 break;
             case E2 :
                 etat = Etat.E3;
-                PresentationE3();
-                DestroyAllThreadsIfExists();
-                tdec = new Thread(new Runnable() {
-                    public void run() {
-                         DecrementeCompteur();
-                    }
-                });  
-                tdec.start();
-                
+                PresentationE3();                
                 break;
             case E3 :
                 break;
@@ -219,14 +249,6 @@ public final class Exercice4 extends javax.swing.JFrame {
             case E3 :
                 etat = Etat.E2;
                 PresentationE2();
-                DestroyAllThreadsIfExists();
-                tinc = new Thread(new Runnable() {
-                    public void run() {
-                         IncrementCompteur();
-                    }
-                });  
-                tinc.start();
-                
                 break;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -239,15 +261,14 @@ public final class Exercice4 extends javax.swing.JFrame {
             case E2 :
                 etat = Etat.E1;
                 PresentationE1();
+                afficherPouf();
                 break;
             case E3 :
                 etat = Etat.E1;
                 PresentationE1();
+                afficherPouf();
                 break;
         }
-        
-        DestroyAllThreadsIfExists();
-        jLabel1.setText("POUF");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

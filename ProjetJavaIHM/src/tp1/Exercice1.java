@@ -10,47 +10,42 @@ package tp1;
  * @author uzanl
  */
 public final class Exercice1 extends javax.swing.JFrame {
-
-    public String etat;
     
-    /**
-     * Creates new form Exercice1
-     */
+    private enum Etat {E1, E2, E3, E4};
+    private Etat etat;
+    
     public Exercice1() {
         initComponents();
-        etat = E1();
+        etat = Etat.E1;
+        PresentationE1();
     }
 
-    public String E1() {
+    private void PresentationE1() {
         this.jButton1.setEnabled(true);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);
-        return "E1";
     }
 
-    public String E2() {
+    private void PresentationE2() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(true);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);
-        return "E2";
     }
 
-    public String E3() {
+    private void PresentationE3() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(true);
         this.jButton4.setEnabled(false);
-        return "E3";
     }
 
-    public String E4() {
+    private void PresentationE4() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(true);
-        return "E4";
     }
 
     /**
@@ -128,19 +123,75 @@ public final class Exercice1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        etat = E2();
+        switch(etat) {
+            case E1 :
+                    etat = Etat.E2;
+                    PresentationE2();
+                break;
+            case E2 :
+                    //interdit
+                break;
+            case E3 :
+                    //interdit
+                break;
+            case E4 :
+                    //interdit
+                break;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        etat = E3();
+        switch(etat) {
+            case E1 :
+                    //interdit
+                break;
+            case E2 :
+                    etat = Etat.E3;
+                    PresentationE3();
+                break;
+            case E3 :
+                    //interdit
+                break;
+            case E4 :
+                    //interdit
+                break;
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        etat = E4();
+        switch(etat) {
+            case E1 :
+                    //interdit
+                break;
+            case E2 :
+                    //interdit
+                break;
+            case E3 :
+                    etat = Etat.E4;
+                    PresentationE4();
+                break;
+            case E4 :
+                    //interdit
+                break;
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        etat = E1();
+        switch(etat) {
+            case E1 :
+                    //interdit
+                break;
+            case E2 :
+                    //interdit
+                break;
+            case E3 :
+                    //interdit
+                break;
+            case E4 :
+                    etat = Etat.E1;
+                    PresentationE1();
+                break;
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

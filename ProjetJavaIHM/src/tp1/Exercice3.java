@@ -5,64 +5,64 @@
  */
 package tp1;
 
+import javax.swing.Timer;
+
 /**
  *
  * @author uzanl
  */
 public final class Exercice3 extends javax.swing.JFrame {
 
-    public String etat;
-    public int compteur;
-    public Thread t1;
-    
-    /**
-     * Creates new form Exercice1
-     */
+    private final Timer timer = new Timer(1000, this::timerActionPerformed);
+    private enum Etat {E1, E2};
+    private Etat etat;
+    private int compteur;
+    private int i;
+
     public Exercice3() {
         initComponents();
-        etat = E1();
+        etat = Etat.E1;
+        PresentationE1();
+        initialiserCompteur();
+        initialiserEtat();
     }
 
-    public String E1() {
+    private void PresentationE1() {
         this.jButton1.setEnabled(true);
         this.jButton2.setEnabled(false);
-        return "E1";
+        timer.stop();
     }
 
-    public String E2() {
+    private void PresentationE2() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(true);
-        return "E2";
+        timer.start();
     }
     
-    public void IncrementCompteur() {
-         /*if(compteur < 3){
-            etat = E2();
-            try {
-                compteur++;
-                jLabel1.setText(Integer.toString(compteur));
-                Thread.sleep (1000);
-            }catch (InterruptedException e) { 
-                System.out.print("erreur");
-            }
-        } else {
-            etat = E1();
-            jLabel1.setText("POUF");
-        }*/
-       
-        etat = E2();
-        for (int i=0;i<4;i++){
-            try {
-                this.jLabel1.setText(Integer.toString(i));
-                Thread.sleep (1000);
-            }catch (InterruptedException e) { 
-                System.out.print("erreur");
-            }
-        }
-        etat = E1();
-        jLabel1.setText("POUF");
+    private void afficherPouf() {
+        jLabel1.setText("Pouf");
     }
-
+    
+    private void afficherCompteur() {
+        jLabel1.setText(compteur +"");
+    }
+    
+    private void initialiserCompteur() {
+        compteur = 0;
+    }
+    
+    private void initialiserEtat() {
+        i = 0;
+    }
+    
+    private void incrementerCompteur() {
+        compteur++;
+    }
+    
+    private void incrementerEtat() {
+        i++;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,7 +92,7 @@ public final class Exercice3 extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("           ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,35 +121,68 @@ public final class Exercice3 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+    START
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         switch(etat){
-            case "E1" :
-                etat = E2();
-                compteur = 0;
-                jLabel1.setText(Integer.toString(compteur));
-                t1 = new Thread(new Runnable() {
-                    public void run() {
-                         IncrementCompteur();
-                    }
-                });  
-                t1.start();
-                               
+            case E1 :
+                etat = Etat.E2;
+                PresentationE2();
+                initialiserCompteur();
+                initialiserEtat();
+                afficherCompteur();
+                break;
+            case E2 :
+                // interdit      
                 break;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+    /*
+    STOP
+    */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         switch(etat){
-            case "E2" :
-                etat = E1();
-                if(t1.isAlive()){
-                    t1.suspend();
-                }
-                jLabel1.setText("POUF");
+            case E1 :
+                // interdit 
+                break;
+            case E2 :
+                etat = Etat.E1;
+                PresentationE1();
+                initialiserCompteur();
+                initialiserEtat();
+                afficherPouf();
                 break;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void timerActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        switch (etat ) {
+            case E1:
+                //interdit
+                break;
+            case E2:
+                if (i >= 3) {
+                        etat = Etat.E1;
+                        PresentationE1();
+                        initialiserCompteur();
+                        initialiserEtat(); 
+                        afficherPouf();
+                    } else {
+                        etat = Etat.E2;
+                        PresentationE2();
+                        incrementerCompteur();
+                        incrementerEtat();
+                        afficherCompteur();
+                    }
+                break;
+        }
+    }  
+    
+    
+    
     /**
      * @param args the command line arguments
      */

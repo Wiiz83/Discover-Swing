@@ -11,46 +11,46 @@ package tp1;
  */
 public final class Exercice2 extends javax.swing.JFrame {
 
-    public String etat;
+    private enum Etat {E1, E2, E3, E4, E5, E6};
+    private Etat etat;
     
     /**
      * Creates new form Exercice1
      */
     public Exercice2() {
         initComponents();
-        etat = E1();
+        etat = Etat.E1;
+        PresentationE1();
     }
 
-    public String E1() {
+    private void PresentationE1() {
         this.jButton1.setEnabled(true);
         this.jButton2.setEnabled(true);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);
-        return "E1";
     }
 
-    public String E2() {
-        return "E2";
+    private void PresentationE2() {
+        
     }
 
-    public String E3() {
-        return "E3";
+    private void PresentationE3() {
+        
     }
 
-    public String E4() {
+    private void PresentationE4() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(true);
         this.jButton4.setEnabled(true);
-        return "E4";
     }
     
-    public String E5() {
-        return "E5";
+    private void PresentationE5() {
+
     }
     
-    public String E6() {
-        return "E6";
+    private void PresentationE6() {
+
     }
 
     /**
@@ -129,56 +129,104 @@ public final class Exercice2 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         switch(etat){
-            case "E1" :
-                etat = E2();
+            case E1 :
+                etat = Etat.E2;
+                PresentationE2();
                 break;
-            case "E2" :
-                etat = E2();
+            case E2 :
+                etat = Etat.E2;
+                PresentationE2();
                 break;
-            case "E3" :
-                etat = E4();
+            case E3 :
+                etat = Etat.E4;
+                PresentationE4();
+                break;
+            case E4 :
+                
+                break;
+            case E5 :
+                
+                break;
+            case E6 :
+                
                 break;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         switch(etat){
-            case "E1" :
-                etat = E3();
+            case E1 :
+                etat = Etat.E3;
+                PresentationE3();
                 break;
-            case "E2" :
-                etat = E4();
+            case E2 :
+                etat = Etat.E4;
+                PresentationE4();
                 break;
-            case "E3" :
-                etat = E3();
+            case E3 :
+                etat = Etat.E3;
+                PresentationE3();
+                break;
+            case E4 :
+                
+                break;
+            case E5 :
+                
+                break;
+            case E6 :
+                
                 break;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         switch(etat){
-            case "E1" :
-                etat = E2();
+            case E1 :
+                
                 break;
-            case "E2" :
-                etat = E2();
+            case E2 :
+
                 break;
-            case "E3" :
-                etat = E4();
+            case E3 :
+
+                break;
+            case E4 :
+                etat = Etat.E5;
+                PresentationE5();
+                break;
+            case E5 :
+                etat = Etat.E5;
+                PresentationE5();
+                break;
+            case E6 :
+                etat = Etat.E1;
+                PresentationE1();
                 break;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         switch(etat){
-            case "E1" :
-                etat = E2();
+            case E1 :
+
                 break;
-            case "E2" :
-                etat = E2();
+            case E2 :
+                
                 break;
-            case "E3" :
-                etat = E4();
+            case E3 :
+
+                break;
+            case E4 :
+                etat = Etat.E6;
+                PresentationE6();
+                break;
+            case E5 :
+                etat = Etat.E1;
+                PresentationE1();
+                break;
+            case E6 :
+                etat = Etat.E6;
+                PresentationE6();
                 break;
         }
     }//GEN-LAST:event_jButton4ActionPerformed
