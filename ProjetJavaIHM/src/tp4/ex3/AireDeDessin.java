@@ -3,74 +3,55 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp4.ex1;
+package tp4.ex3;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import javax.swing.*;
 
-/**
- *
- * @author uzanl
- */
-public class AireDeDessin extends javax.swing.JPanel {
-    
-    private static class Ligne {
-        final int x1; 
-        final int y1;
-        final int x2;
-        final int y2;   
-        final Color color;
-
-        public Ligne(int x1, int y1, int x2, int y2, Color color) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.color = color;
-        }               
-    }
-
-    private final ArrayList<Ligne> lignes = new ArrayList<Ligne>();
-    
+class AireDeDessin extends JComponent {
     BufferedImage mon_image;
     Graphics2D graphic;
     Point origin;
+    Point destination;
     int width;
     int height;
-    Ligne ligneEnCours;
 
+    
+    public enum DrawStates {Start, Preview, Final};
+    public DrawStates state;
+    
+    public enum DrawTypes {Ligne, Cercle, Rectangle};
+    public DrawTypes type;
+    
     public AireDeDessin() {
+        type = DrawTypes.Ligne;
+        state = DrawStates.Start;
         mon_image = null;
         origin = null;
     }
 
-    public void setOrigin(Point p) {
+    public void originDraw(Point p) {
+        state = DrawStates.Preview;
         origin = p;
     }
 
-    public void drawPreview(Point p) {
-        ligneEnCours = new Ligne(origin.x, origin.y, p.x, p.y, Color.black);
-        graphic.setPaint(Color.white);
-        graphic.fillRect(p.x, p.y, 10, 10);
-        repaint();
-    }
-    
-    public void drawFinish(){
-        lignes.add(this.ligneEnCours);        
+    public void previewDraw(Point p) {        
+    	state = DrawStates.Final;
+        destination = p;
         repaint();
     }
 
+    public void finishDraw(){
+        state = DrawStates.Start;
+        repaint();
+    }
+    
     //on efface en dessinant un rectangle blanc
     public void efface(Point p) {
-        lignes.clear();
         graphic.setPaint(Color.white);
         graphic.fillRect(p.x, p.y, 10, 10);
-        repaint();
     }
     
     //on efface tout
@@ -102,33 +83,48 @@ public class AireDeDessin extends javax.swing.JPanel {
     
 
     public void paintComponent(Graphics g) {
-        Graphics2D drawable = (Graphics2D) g;
+       Graphics2D drawable = (Graphics2D) g;
+        
+        // image définitive
+        if(state == DrawStates.Final || state == DrawStates.Start){
+            // On reccupere quelques infos
+            int width = getSize().width;
+            int height = getSize().height;
 
-        // On reccupere quelques infos
-        int width = getSize().width;
-        int height = getSize().height;
-
-        // on efface tout les dessins
-        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        graphic = mon_image.createGraphics();
-        graphic.setPaint(Color.white);
-        graphic.fillRect(0, 0, width, height);
-        graphic.setPaint(Color.black);
-       
-        // on redessinne la ligne en cours de prévisualisation 
-        if(ligneEnCours != null){
-            graphic.setColor(ligneEnCours.color);
-            graphic.drawLine(ligneEnCours.x1, ligneEnCours.y1, ligneEnCours.x2, ligneEnCours.y2);
+            if (mon_image == null) {
+                    mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                    graphic = mon_image.createGraphics();
+                    graphic.setPaint(Color.white);
+                    graphic.fillRect(0, 0, width, height);
+                    graphic.setPaint(Color.black);
+            }
+            drawable.drawImage(mon_image, 0, 0, null);
         }
+        
+        // preview d'une forme --> une copie de l'image définitive  
+        if(state == DrawStates.Preview){
+            BufferedImage copieimage = mon_image;
+            
+            // on dessine 
+            graphic.setPaint(Color.black);
+        
+            if(type == DrawTypes.Ligne){
+                drawable.drawLine(origin.x, origin.y, destination.x, destination.y);
+            }
 
-        // et toutes les lignes terminées
-        for(Ligne line : lignes) {
-            graphic.setColor(line.color);
-            graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
+            if(type == DrawTypes.Cercle){
+                drawable.drawOval(origin.x, origin.y, destination.x, destination.y);
+            }
+
+            if(type == DrawTypes.Rectangle){
+                drawable.drawRect(origin.x, origin.y, destination.x, destination.y);
+            }
+            
+            drawable.drawImage(copieimage, 0, 0, null);
         }
-
-        drawable.drawImage(mon_image, 0, 0, null);
     }
+
+
 /*
     /**
      * This method is called from within the constructor to initialize the form.

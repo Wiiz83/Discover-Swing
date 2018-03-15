@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp4.ex1;
+package tp4.ex2;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -43,40 +43,56 @@ public class AireDeDessin extends javax.swing.JPanel {
     int width;
     int height;
     Ligne ligneEnCours;
+    boolean drawFirstPoint;
+    boolean drawEndPoint;
 
     public AireDeDessin() {
         mon_image = null;
         origin = null;
+        drawFirstPoint = true;
+        drawEndPoint = false;
+    }
+    
+    public void lineStart(Point p) {
+        if(drawFirstPoint == true){
+            origin = p;  // on fait le premier point de la figure et donc de la première ligne
+            drawFirstPoint = false;
+        } else {
+            origin = new Point(ligneEnCours.x2, ligneEnCours.y2); // le point de la fin de la dernière ligne
+        }
+
     }
 
-    public void setOrigin(Point p) {
-        origin = p;
-    }
-
-    public void drawPreview(Point p) {
+    public void linePreview(Point p) {
         ligneEnCours = new Ligne(origin.x, origin.y, p.x, p.y, Color.black);
         graphic.setPaint(Color.white);
         graphic.fillRect(p.x, p.y, 10, 10);
         repaint();
     }
     
-    public void drawFinish(){
+    public void lineFinish(){
         lignes.add(this.ligneEnCours);        
         repaint();
     }
-
-    //on efface en dessinant un rectangle blanc
-    public void efface(Point p) {
-        lignes.clear();
-        graphic.setPaint(Color.white);
-        graphic.fillRect(p.x, p.y, 10, 10);
-        repaint();
+    
+    public void drawFinish(){
+        drawFirstPoint = true;
+    }
+    
+    // Un clic droit enlève le dernier point ajouté (excepté le cas où il n’y a qu’un point)
+    public void efface() {
+        if(drawFirstPoint == false){
+            Ligne derniereLigne = lignes.get(lignes.size() - 1);
+            origin = new Point(derniereLigne.x1, derniereLigne.y1);
+            lignes.remove(lignes.size() - 1);
+            repaint();
+        }
     }
     
     //on efface tout
-    public void nouveau(int w, int h) {
-    	width = w;
-    	height = h;
+    public void nouveau() {
+        width = getSize().width;
+        height = getSize().height;
     	
         mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         graphic = mon_image.createGraphics();
@@ -101,6 +117,7 @@ public class AireDeDessin extends javax.swing.JPanel {
     }
     
 
+    @Override
     public void paintComponent(Graphics g) {
         Graphics2D drawable = (Graphics2D) g;
 
