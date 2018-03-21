@@ -1,4 +1,4 @@
-package tp4.id3;
+package bkup.id3;
 
 import java.awt.*;
 import javax.swing.*;

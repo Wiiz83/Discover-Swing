@@ -1,4 +1,4 @@
-package tp4.id1;
+package bkup.id1;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;

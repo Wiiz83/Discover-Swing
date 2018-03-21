@@ -1,6 +1,5 @@
 package tp4.ex1;
 
-import tp4.ex1.AireDeDessin;
 import java.awt.event.*;
 import javax.swing.SwingUtilities;
 

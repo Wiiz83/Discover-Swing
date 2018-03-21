@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import tp4.Forme;
 
 /**
  *
@@ -19,30 +20,14 @@ import java.util.ArrayList;
  */
 public class AireDeDessin extends javax.swing.JPanel {
     
-    private static class Ligne {
-        final int x1; 
-        final int y1;
-        final int x2;
-        final int y2;   
-        final Color color;
-
-        public Ligne(int x1, int y1, int x2, int y2, Color color) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.color = color;
-        }               
-    }
-
-    private final ArrayList<Ligne> lignes = new ArrayList<Ligne>();
+    private final ArrayList<Forme> lignes = new ArrayList<>();
     
     BufferedImage mon_image;
     Graphics2D graphic;
     Point origin;
     int width;
     int height;
-    Ligne ligneEnCours;
+    Forme ligneEnCours;
 
     public AireDeDessin() {
         mon_image = null;
@@ -54,7 +39,7 @@ public class AireDeDessin extends javax.swing.JPanel {
     }
 
     public void drawPreview(Point p) {
-        ligneEnCours = new Ligne(origin.x, origin.y, p.x, p.y, Color.black);
+        ligneEnCours = new Forme(origin.x, origin.y, p.x, p.y, Forme.Type.Ligne);
         graphic.setPaint(Color.white);
         graphic.fillRect(p.x, p.y, 10, 10);
         repaint();
@@ -62,28 +47,6 @@ public class AireDeDessin extends javax.swing.JPanel {
     
     public void drawFinish(){
         lignes.add(this.ligneEnCours);        
-        repaint();
-    }
-
-    //on efface en dessinant un rectangle blanc
-    public void efface(Point p) {
-        lignes.clear();
-        graphic.setPaint(Color.white);
-        graphic.fillRect(p.x, p.y, 10, 10);
-        repaint();
-    }
-    
-    //on efface tout
-    public void nouveau(int w, int h) {
-    	width = w;
-    	height = h;
-    	
-        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        graphic = mon_image.createGraphics();
-        
-        graphic.setPaint(Color.white);
-        graphic.fillRect(0, 0, width, height);
-        
         repaint();
     }
     
@@ -101,7 +64,10 @@ public class AireDeDessin extends javax.swing.JPanel {
     }
     
 
+    @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+    
         Graphics2D drawable = (Graphics2D) g;
 
         // On reccupere quelques infos
@@ -117,13 +83,11 @@ public class AireDeDessin extends javax.swing.JPanel {
        
         // on redessinne la ligne en cours de prévisualisation 
         if(ligneEnCours != null){
-            graphic.setColor(ligneEnCours.color);
             graphic.drawLine(ligneEnCours.x1, ligneEnCours.y1, ligneEnCours.x2, ligneEnCours.y2);
         }
 
         // et toutes les lignes terminées
-        for(Ligne line : lignes) {
-            graphic.setColor(line.color);
+        for(Forme line : lignes) {
             graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
         }
 

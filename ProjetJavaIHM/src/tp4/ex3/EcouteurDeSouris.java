@@ -12,35 +12,21 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
     
     @Override
     public void mousePressed(MouseEvent e) {
-        /*if(SwingUtilities.isLeftMouseButton(e)){
-            aire.originDraw(e.getPoint());
-        }*/
         if(SwingUtilities.isLeftMouseButton(e)){
-            aire.originDraw(e.getPoint());
-            aire.previewDraw(e.getPoint());
-            aire.repaint();
-            
+            aire.setOrigin(e.getPoint());
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if(SwingUtilities.isLeftMouseButton(e)){
-            aire.previewDraw(e.getPoint());
-            aire.repaint();
-        }
-                /*
        if(SwingUtilities.isLeftMouseButton(e)){
-            aire.previewDraw(e.getPoint());
-        }*/
+            aire.drawPreview(e.getPoint());
+        }
     }
     
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(SwingUtilities.isLeftMouseButton(e)){
-            aire.finishDraw();
-            aire.repaint();
-        }
+       aire.drawFinish();
     }
 
 

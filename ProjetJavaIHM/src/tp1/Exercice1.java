@@ -17,31 +17,31 @@ public final class Exercice1 extends javax.swing.JFrame {
     public Exercice1() {
         initComponents();
         etat = Etat.E1;
-        PresentationE1();
+        presentationE1();
     }
 
-    private void PresentationE1() {
+    private void presentationE1() {
         this.jButton1.setEnabled(true);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);
     }
 
-    private void PresentationE2() {
+    private void presentationE2() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(true);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);
     }
 
-    private void PresentationE3() {
+    private void presentationE3() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(true);
         this.jButton4.setEnabled(false);
     }
 
-    private void PresentationE4() {
+    private void presentationE4() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(false);
@@ -126,7 +126,7 @@ public final class Exercice1 extends javax.swing.JFrame {
         switch(etat) {
             case E1 :
                     etat = Etat.E2;
-                    PresentationE2();
+                    presentationE2();
                 break;
             case E2 :
                     //interdit
@@ -147,7 +147,7 @@ public final class Exercice1 extends javax.swing.JFrame {
                 break;
             case E2 :
                     etat = Etat.E3;
-                    PresentationE3();
+                    presentationE3();
                 break;
             case E3 :
                     //interdit
@@ -168,7 +168,7 @@ public final class Exercice1 extends javax.swing.JFrame {
                 break;
             case E3 :
                     etat = Etat.E4;
-                    PresentationE4();
+                    presentationE4();
                 break;
             case E4 :
                     //interdit
@@ -189,7 +189,7 @@ public final class Exercice1 extends javax.swing.JFrame {
                 break;
             case E4 :
                     etat = Etat.E1;
-                    PresentationE1();
+                    presentationE1();
                 break;
         }
     }//GEN-LAST:event_jButton4ActionPerformed

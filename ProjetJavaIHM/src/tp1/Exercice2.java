@@ -20,38 +20,23 @@ public final class Exercice2 extends javax.swing.JFrame {
     public Exercice2() {
         initComponents();
         etat = Etat.E1;
-        PresentationE1();
+        presentationE1E2E3();
     }
 
-    private void PresentationE1() {
+    private void presentationE1E2E3() {
         this.jButton1.setEnabled(true);
         this.jButton2.setEnabled(true);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);
     }
 
-    private void PresentationE2() {
-        
-    }
-
-    private void PresentationE3() {
-        
-    }
-
-    private void PresentationE4() {
+    private void presentationE4E5E6() {
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(true);
         this.jButton4.setEnabled(true);
     }
     
-    private void PresentationE5() {
-
-    }
-    
-    private void PresentationE6() {
-
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,15 +116,15 @@ public final class Exercice2 extends javax.swing.JFrame {
         switch(etat){
             case E1 :
                 etat = Etat.E2;
-                PresentationE2();
+                presentationE1E2E3();
                 break;
             case E2 :
                 etat = Etat.E2;
-                PresentationE2();
+                presentationE1E2E3();
                 break;
             case E3 :
                 etat = Etat.E4;
-                PresentationE4();
+                presentationE4E5E6();
                 break;
             case E4 :
                 
@@ -157,15 +142,15 @@ public final class Exercice2 extends javax.swing.JFrame {
         switch(etat){
             case E1 :
                 etat = Etat.E3;
-                PresentationE3();
+                presentationE1E2E3();
                 break;
             case E2 :
                 etat = Etat.E4;
-                PresentationE4();
+                presentationE4E5E6();
                 break;
             case E3 :
                 etat = Etat.E3;
-                PresentationE3();
+                presentationE1E2E3();
                 break;
             case E4 :
                 
@@ -192,15 +177,15 @@ public final class Exercice2 extends javax.swing.JFrame {
                 break;
             case E4 :
                 etat = Etat.E5;
-                PresentationE5();
+                presentationE4E5E6();
                 break;
             case E5 :
                 etat = Etat.E5;
-                PresentationE5();
+                presentationE4E5E6();
                 break;
             case E6 :
                 etat = Etat.E1;
-                PresentationE1();
+                presentationE1E2E3();
                 break;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -218,15 +203,15 @@ public final class Exercice2 extends javax.swing.JFrame {
                 break;
             case E4 :
                 etat = Etat.E6;
-                PresentationE6();
+                presentationE4E5E6();
                 break;
             case E5 :
                 etat = Etat.E1;
-                PresentationE1();
+                presentationE1E2E3();
                 break;
             case E6 :
                 etat = Etat.E6;
-                PresentationE6();
+                presentationE4E5E6();
                 break;
         }
     }//GEN-LAST:event_jButton4ActionPerformed

@@ -1,4 +1,4 @@
-package tp4.id2;
+package bkup.id2;
 
 import java.awt.*;
 import java.awt.image.*;

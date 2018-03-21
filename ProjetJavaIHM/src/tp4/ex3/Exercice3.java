@@ -5,8 +5,7 @@
  */
 package tp4.ex3;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import tp4.Forme;
 
 /**
  *
@@ -134,15 +133,15 @@ public class Exercice3 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        aireDeDessin1.mode = AireDeDessin.Mode.Ligne;
+        aireDeDessin1.type = Forme.Type.Ligne;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        aireDeDessin1.mode = AireDeDessin.Mode.Cercle;
+        aireDeDessin1.type = Forme.Type.Cercle;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        aireDeDessin1.mode = AireDeDessin.Mode.Rectangle;
+        aireDeDessin1.type = Forme.Type.Rectangle;
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

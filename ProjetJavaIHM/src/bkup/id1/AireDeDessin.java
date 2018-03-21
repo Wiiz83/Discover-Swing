@@ -1,4 +1,4 @@
-package tp4.id1;
+package bkup.id1;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

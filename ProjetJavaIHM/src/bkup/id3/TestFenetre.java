@@ -1,21 +1,23 @@
-package tp4.id2;
+package bkup.id3;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class TestFenetre implements Runnable {
-	
+public class TestFenetre implements Runnable{
+
     public void run() {
         // Creation d'une fenetre
-        JFrame frame = new JFrame("Exercice 5");
-
+        JFrame frame = new JFrame("Exercice 4");
+    	
         // Creation du composant de dessin et ajout de l'objet de traitement
         // des evenements provenant de la souris
         //AireDeDessin dessin = new AireDeDessin();
         AireDeDessin dessin = new AireDeDessin();
         
         EcouteurDeSouris listener = new EcouteurDeSouris(dessin);
+        EcouteurDeComposant component_listener = new EcouteurDeComposant(dessin);
         
+        dessin.addComponentListener(component_listener);
         dessin.addMouseListener(listener);
         dessin.addMouseMotionListener(listener);
         
@@ -33,4 +35,5 @@ public class TestFenetre implements Runnable {
     public static void main(String [] args) {
         SwingUtilities.invokeLater(new TestFenetre());
     }
+
 }

@@ -5,95 +5,131 @@
  */
 package tp2;
 
-import java.awt.Color;
 import javax.swing.Timer;
 
-/**
- *
- * @author uzanl
- */
 public final class Exercice2 extends javax.swing.JFrame {
 
-    private final Timer timerPanne = new Timer(1000, this::timerPanneActionPerformed);
-    private final Timer timerEnMarche = new Timer(1000, this::timerEnMarcheActionPerformed);
-   
-    
-    public enum Etat {E1, E2, E3, E4, E5, E6};
+    public enum Etat {
+        E1, E2, E3
+    };
+    private int i;
     public Etat etat;
     public int compteur;
-    public Thread tinc;
-    public Thread tdec;
-    
+
+    private final Timer timerPlusUn = new Timer(1000, this::timerPlusUnActionPerformed);
+    private final Timer timerMoinsUn = new Timer(1000, this::timerMoinsUnActionPerformed);
+
     /**
      * Creates new form Exercice1
      */
     public Exercice2() {
         initComponents();
-       /* this.GreenLight.setEnabled(false);
-        this.RedLight.setEnabled(false);
-        this.OrangeLight.setEnabled(false);*/
-        etat = Etat.E6;
-        PresentationE6();
+        etat = Etat.E1;
+        PresentationE1();
+        initialiserEtat();
+        initialiserCompteur();
     }
 
     public void PresentationE1() {
-        this.GreenLight.setBackground(Color.GREEN);
-        this.RedLight.setBackground(Color.WHITE);
-        this.OrangeLight.setBackground(Color.WHITE);
-        this.PlayButton.setEnabled(false);
-        this.StopButton.setEnabled(true);
-        this.PanneButton.setEnabled(true);
+        this.jButton1.setEnabled(true);
+        this.jButton2.setEnabled(false);
+        this.jButton3.setEnabled(false);
+        this.jButton4.setEnabled(false);
+        timerPlusUn.stop();
+        timerMoinsUn.stop();
     }
 
     public void PresentationE2() {
-        this.GreenLight.setBackground(Color.WHITE);
-        this.RedLight.setBackground(Color.WHITE);
-        this.OrangeLight.setBackground(Color.ORANGE);
-        this.PlayButton.setEnabled(false);
-        this.StopButton.setEnabled(true);
-        this.PanneButton.setEnabled(true);
-    }
-    
-    public void PresentationE3() {
-        this.GreenLight.setBackground(Color.WHITE);
-        this.RedLight.setBackground(Color.RED);
-        this.OrangeLight.setBackground(Color.WHITE);
-        this.PlayButton.setEnabled(false);
-        this.StopButton.setEnabled(true);
-        this.PanneButton.setEnabled(true);
-        timerPanne.stop();
-        timerEnMarche.start();
-    }
-    
-    public void PresentationE4() {
-        this.GreenLight.setBackground(Color.WHITE);
-        this.RedLight.setBackground(Color.WHITE);
-        this.OrangeLight.setBackground(Color.WHITE);
-        this.PlayButton.setEnabled(false);
-        this.StopButton.setEnabled(true);
-        this.PanneButton.setEnabled(false);
+        this.jButton1.setEnabled(false);
+        this.jButton2.setEnabled(true);
+        this.jButton3.setEnabled(false);
+        this.jButton4.setEnabled(true);
+        timerMoinsUn.stop();
+        timerPlusUn.start();
     }
 
-    public void PresentationE5() {
-        this.GreenLight.setBackground(Color.WHITE);
-        this.RedLight.setBackground(Color.WHITE);
-        this.OrangeLight.setBackground(Color.ORANGE);
-        this.PlayButton.setEnabled(false);
-        this.StopButton.setEnabled(true);
-        this.PanneButton.setEnabled(false);
-        timerEnMarche.stop();
-        timerPanne.start();
+    public void PresentationE3() {
+        this.jButton1.setEnabled(false);
+        this.jButton2.setEnabled(false);
+        this.jButton3.setEnabled(true);
+        this.jButton4.setEnabled(true);
+        timerMoinsUn.start();
+        timerPlusUn.stop();
     }
-    
-    public void PresentationE6() {
-        this.GreenLight.setBackground(Color.WHITE);
-        this.RedLight.setBackground(Color.WHITE);
-        this.OrangeLight.setBackground(Color.WHITE);
-        this.PlayButton.setEnabled(true);
-        this.StopButton.setEnabled(false);
-        this.PanneButton.setEnabled(false);
-        timerPanne.stop();
-        timerEnMarche.stop();
+
+    private void initialiserEtat() {
+        i = 0;
+    }
+
+    private void initialiserCompteur() {
+        compteur = 0;
+    }
+
+    private void incrementerEtat() {
+        i++;
+    }
+
+    private void incrementerCompteur() {
+        compteur++;
+    }
+
+    private void decrementerEtat() {
+        i--;
+    }
+
+    private void decrementerCompteur() {
+        compteur--;
+    }
+
+    private void afficherPouf() {
+        jLabel1.setText("Pouf");
+    }
+
+    private void afficherCompteur() {
+        jLabel1.setText(compteur + "");
+    }
+
+    private void timerPlusUnActionPerformed(java.awt.event.ActionEvent evt) {
+        switch (etat) {
+            case E1:
+                //interdit
+                break;
+            case E2:
+                etat = Etat.E2;
+                PresentationE2();
+                incrementerCompteur();
+                incrementerEtat();
+                afficherCompteur();
+                break;
+            case E3:
+                //interdit
+                break;
+        }
+    }
+
+    private void timerMoinsUnActionPerformed(java.awt.event.ActionEvent evt) {
+        switch (etat) {
+            case E1:
+                //interdit
+                break;
+            case E2:
+                //interdit
+                break;
+            case E3:
+
+                if (i > 0) {
+                    etat = Etat.E3;
+                    PresentationE3();
+                    decrementerCompteur();
+                    decrementerEtat();
+                    afficherCompteur();
+
+                } else {
+                    etat = Etat.E1;
+                    PresentationE1();
+                }
+                break;
+        }
     }
 
     /**
@@ -105,51 +141,41 @@ public final class Exercice2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        RedLight = new javax.swing.JButton();
-        StopButton = new javax.swing.JButton();
-        PanneButton = new javax.swing.JButton();
-        PlayButton = new javax.swing.JButton();
-        OrangeLight = new javax.swing.JButton();
-        GreenLight = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        RedLight.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Start");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RedLightActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        StopButton.setText("Stop");
-        StopButton.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("<<");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StopButtonActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
-        PanneButton.setText("Panne");
-        PanneButton.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("0");
+
+        jButton3.setText(">>");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PanneButtonActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        PlayButton.setText("Play");
-        PlayButton.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setText("Stop");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PlayButtonActionPerformed(evt);
-            }
-        });
-
-        OrangeLight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OrangeLightActionPerformed(evt);
-            }
-        });
-
-        GreenLight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GreenLightActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -158,169 +184,99 @@ public final class Exercice2 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(OrangeLight, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(RedLight, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(GreenLight, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(6, 6, 6)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(StopButton)
-                    .addComponent(PanneButton)
-                    .addComponent(PlayButton))
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(PlayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RedLight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(PanneButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(OrangeLight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(StopButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(GreenLight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void timerEnMarcheActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        switch(etat){
-            case E1 :
+    // play
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        switch (etat) {
+            case E1:
+                etat = Etat.E2;
+                PresentationE2();
+                initialiserEtat();
+                initialiserCompteur();
+                afficherCompteur();
+                break;
+            case E2:
+                break;
+            case E3:
+                break;
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    // décremente
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        switch (etat) {
+            case E1:
+                break;
+            case E2:
+                etat = Etat.E3;
+                PresentationE3();
+                break;
+            case E3:
+                break;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    // incrémente
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        switch (etat) {
+            case E1:
+                break;
+            case E2:
+                break;
+            case E3:
                 etat = Etat.E2;
                 PresentationE2();
                 break;
-            case E2 :
-                etat = Etat.E3;
-                PresentationE3();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    // stop
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        switch (etat) {
+            case E1:
                 break;
-            case E3 :
+            case E2:
                 etat = Etat.E1;
                 PresentationE1();
+                afficherPouf();
                 break;
-            case E4 :
-                break;
-            case E5 :
-                break;
-            case E6 :
-                break;
-        }
-    } 
-
-    private void timerPanneActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        switch(etat){
-            case E1 :
-                break;
-            case E2 :
-                break;
-            case E3 :
-                break;
-            case E4 :
-                etat = Etat.E5;
-                PresentationE5();
-                break;
-            case E5 :
-                etat = Etat.E4;
-                PresentationE4();
-                break;
-            case E6 :
+            case E3:
+                etat = Etat.E1;
+                PresentationE1();
+                afficherPouf();
                 break;
         }
-    } 
-
-    private void RedLightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RedLightActionPerformed
-   
-    }//GEN-LAST:event_RedLightActionPerformed
-
-    private void StopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopButtonActionPerformed
-        switch(etat){
-            case E1 :
-                etat = Etat.E6;
-                PresentationE6();
-                break;
-            case E2 :
-                etat = Etat.E6;
-                PresentationE6();
-                break;
-            case E3 :
-                etat = Etat.E6;
-                PresentationE6();
-                break;
-            case E4 :
-                etat = Etat.E6;
-                PresentationE6();
-                break;
-            case E5 :
-                etat = Etat.E6;
-                PresentationE6();
-                break;
-            case E6 :
-                break;
-        }
-    }//GEN-LAST:event_StopButtonActionPerformed
-
-    private void PanneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanneButtonActionPerformed
-        switch(etat){
-            case E1 :
-                etat = Etat.E5;
-                PresentationE5();
-                break;
-            case E2 :
-                etat = Etat.E5;
-                PresentationE5();
-                break;
-            case E3 :
-                etat = Etat.E5;
-                PresentationE5();
-                break;
-            case E4 :
-                break;
-            case E5 :
-                break;
-            case E6 :
-                break;
-        }
-    }//GEN-LAST:event_PanneButtonActionPerformed
-
-    private void PlayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayButtonActionPerformed
-        switch(etat){
-            case E1 :
-                break;
-            case E2 :
-                break;
-            case E3 :
-                break;
-            case E4 :
-                etat = Etat.E3;
-                PresentationE3();
-                break;
-            case E5 :
-                etat = Etat.E3;
-                PresentationE3();
-                break;
-            case E6 :
-                etat = Etat.E3;
-                PresentationE3();
-                break;
-        }
-    }//GEN-LAST:event_PlayButtonActionPerformed
-
-    private void OrangeLightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrangeLightActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_OrangeLightActionPerformed
-
-    private void GreenLightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GreenLightActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GreenLightActionPerformed
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -347,10 +303,6 @@ public final class Exercice2 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Exercice2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -361,11 +313,10 @@ public final class Exercice2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton GreenLight;
-    private javax.swing.JButton OrangeLight;
-    private javax.swing.JButton PanneButton;
-    private javax.swing.JButton PlayButton;
-    private javax.swing.JButton RedLight;
-    private javax.swing.JButton StopButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

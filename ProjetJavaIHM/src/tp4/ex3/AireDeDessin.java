@@ -9,64 +9,41 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.*;
+import tp4.Forme;
 
 class AireDeDessin extends JComponent {
+    
+    private final ArrayList<Forme> formes = new ArrayList<>();
     BufferedImage mon_image;
     Graphics2D graphic;
     Point origin;
     Point destination;
     int width;
     int height;
+    Forme formeEnCours;
+    public Forme.Type type;
 
-    
-    public enum DrawStates {Start, Preview, Final};
-    public DrawStates state;
-    
-    public enum DrawTypes {Ligne, Cercle, Rectangle};
-    public DrawTypes type;
-    
     public AireDeDessin() {
-        type = DrawTypes.Ligne;
-        state = DrawStates.Start;
         mon_image = null;
         origin = null;
     }
 
-    public void originDraw(Point p) {
-        state = DrawStates.Preview;
+    public void setOrigin(Point p) {
         origin = p;
     }
 
-    public void previewDraw(Point p) {        
-    	state = DrawStates.Final;
-        destination = p;
+    public void drawPreview(Point p) {
+        formeEnCours = new Forme(origin.x, origin.y, p.x, p.y, type);
+        graphic.setPaint(Color.white);
+        graphic.fillRect(p.x, p.y, 10, 10);
+        repaint();
+    }
+    
+    public void drawFinish(){
+        formes.add(this.formeEnCours);        
         repaint();
     }
 
-    public void finishDraw(){
-        state = DrawStates.Start;
-        repaint();
-    }
-    
-    //on efface en dessinant un rectangle blanc
-    public void efface(Point p) {
-        graphic.setPaint(Color.white);
-        graphic.fillRect(p.x, p.y, 10, 10);
-    }
-    
-    //on efface tout
-    public void nouveau(int w, int h) {
-    	width = w;
-    	height = h;
-    	
-        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        graphic = mon_image.createGraphics();
-        
-        graphic.setPaint(Color.white);
-        graphic.fillRect(0, 0, width, height);
-        
-        repaint();
-    }
     
     // on redimmensionne // ne fonctionne pas correctement car efface les dessins
     public void redimensionnement(Dimension d){
@@ -81,47 +58,53 @@ class AireDeDessin extends JComponent {
         graphic.setPaint(Color.black);
     }
     
+    
+    @Override
+    public void paintComponent(Graphics g) {       
+        super.paintComponent(g);
+        Graphics2D drawable = (Graphics2D) g;
 
-    public void paintComponent(Graphics g) {
-       Graphics2D drawable = (Graphics2D) g;
-        
-        // image définitive
-        if(state == DrawStates.Final || state == DrawStates.Start){
-            // On reccupere quelques infos
-            int width = getSize().width;
-            int height = getSize().height;
+        // On reccupere quelques infos
+        int width = getSize().width;
+        int height = getSize().height;
 
-            if (mon_image == null) {
-                    mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-                    graphic = mon_image.createGraphics();
-                    graphic.setPaint(Color.white);
-                    graphic.fillRect(0, 0, width, height);
-                    graphic.setPaint(Color.black);
-            }
-            drawable.drawImage(mon_image, 0, 0, null);
+        // on efface tout les dessins
+        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        graphic = mon_image.createGraphics();
+        graphic.setPaint(Color.white);
+        graphic.fillRect(0, 0, width, height);
+        graphic.setPaint(Color.black);
+       
+        if(type == Forme.Type.Ligne){
+            graphic.drawLine(formeEnCours.x1, formeEnCours.y1, formeEnCours.x2, formeEnCours.y2);
         }
-        
-        // preview d'une forme --> une copie de l'image définitive  
-        if(state == DrawStates.Preview){
-            BufferedImage copieimage = mon_image;
-            
-            // on dessine 
-            graphic.setPaint(Color.black);
-        
-            if(type == DrawTypes.Ligne){
-                drawable.drawLine(origin.x, origin.y, destination.x, destination.y);
-            }
 
-            if(type == DrawTypes.Cercle){
-                drawable.drawOval(origin.x, origin.y, destination.x, destination.y);
-            }
-
-            if(type == DrawTypes.Rectangle){
-                drawable.drawRect(origin.x, origin.y, destination.x, destination.y);
-            }
-            
-            drawable.drawImage(copieimage, 0, 0, null);
+        if(type == Forme.Type.Cercle){
+            graphic.drawOval(formeEnCours.x1, formeEnCours.y1, formeEnCours.x2, formeEnCours.y2);
         }
+
+        if(type == Forme.Type.Rectangle){
+            graphic.drawRect(formeEnCours.x1, formeEnCours.y1, formeEnCours.x2, formeEnCours.y2);
+        }
+
+        // et toutes les lignes terminées
+        if(formes.isEmpty() == false){
+            for(Forme laforme : formes) {
+                switch(laforme.type){
+                    case Ligne :
+                        graphic.drawLine(laforme.x1, laforme.y1, laforme.x2, laforme.y2);
+                        break;
+                    case Cercle :
+                        graphic.drawOval(laforme.x1, laforme.y1, laforme.x2, laforme.y2);
+                        break;
+                    case Rectangle :
+                        graphic.drawRect(laforme.x1, laforme.y1, laforme.x2, laforme.y2);
+                        break;
+                }
+            } 
+        }
+
+        drawable.drawImage(mon_image, 0, 0, null);
     }
 
 
