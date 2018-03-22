@@ -6,7 +6,6 @@
 package tp4.ex2;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -20,23 +19,19 @@ import tp4.Forme;
  */
 public class AireDeDessin extends javax.swing.JPanel {
 
-    private final ArrayList<Forme> lignes = new ArrayList<>();
-    
-    BufferedImage mon_image;
-    Graphics2D graphic;
-    Point origin;
-    int width;
-    int height;
-    Forme ligneEnCours;
-    boolean drawFirstPoint;
-    boolean drawEndPoint;
-    int compteur;
+    private ArrayList<ArrayList<Forme>> polylignes = new ArrayList<>();
+    private ArrayList<Forme> lignes;
+    private BufferedImage mon_image;
+    private Graphics2D graphic;
+    private Point origin;
+    private Forme ligneEnCours;
+    private boolean drawFirstPoint;
+    private int compteur;
     
     public AireDeDessin() {
         mon_image = null;
         origin = null;
         drawFirstPoint = true;
-        drawEndPoint = false;
     }
     
     public void initCompteur(){
@@ -57,6 +52,7 @@ public class AireDeDessin extends javax.swing.JPanel {
     */
     public void ajouterPoint(Point p){
         if(drawFirstPoint == true){
+            this.lignes = new ArrayList<>();
             origin = p;
             drawFirstPoint = false;
         } else {
@@ -64,9 +60,6 @@ public class AireDeDessin extends javax.swing.JPanel {
         }
     }
     
-    /*
-    
-    */
     public void dessinerRouge(Point p){
         ligneEnCours = new Forme(origin.x, origin.y, p.x, p.y, Forme.Type.Ligne);
         repaint();
@@ -76,20 +69,27 @@ public class AireDeDessin extends javax.swing.JPanel {
     La ligne est terminée : on l'ajoute à l'ArrayList de lignes définitives
     */
     public void dessinerNoir(){
-        lignes.add(this.ligneEnCours);        
+        lignes.add(this.ligneEnCours);    
+        ligneEnCours = null;
         repaint();
     }
     
     public void effacerPoint(){
-        ligneEnCours = null;
-        Forme derniereLigne = lignes.get(lignes.size() - 1);
-        origin = new Point(derniereLigne.x1, derniereLigne.y1);
-        lignes.remove(lignes.size() - 1);
-        repaint();
+        // on efface seulement si ce n'est pas le premier point du polyligne
+        if(lignes.size() > 0){
+            ligneEnCours = null;
+            Forme derniereLigne = lignes.get(lignes.size() - 1);
+            origin = new Point(derniereLigne.x1, derniereLigne.y1);
+            lignes.remove(lignes.size() - 1);
+            repaint();
+        }
     }
     
     public void validerPoints(){
+        ligneEnCours = null;
         drawFirstPoint = true;
+        polylignes.add(this.lignes);  
+        repaint();
     }
 
     @Override
@@ -97,16 +97,11 @@ public class AireDeDessin extends javax.swing.JPanel {
         super.paintComponent(g);
         Graphics2D drawable = (Graphics2D) g;
 
-        // On reccupere quelques infos
-        int width = getSize().width;
-        int height = getSize().height;
-
         // on efface tout les dessins
-        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        mon_image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
         graphic = mon_image.createGraphics();
         graphic.setPaint(Color.white);
-        graphic.fillRect(0, 0, width, height);
-        
+        graphic.fillRect(0, 0, getSize().width, getSize().height);
        
         // on redessinne la ligne en cours de prévisualisation 
         graphic.setPaint(Color.RED);
@@ -114,12 +109,23 @@ public class AireDeDessin extends javax.swing.JPanel {
             graphic.drawLine(ligneEnCours.x1, ligneEnCours.y1, ligneEnCours.x2, ligneEnCours.y2);
         }
         
-        // et toutes les lignes terminées
+        // on redessinne toutes les lignes du polyligne en cours 
         graphic.setPaint(Color.black);
-        for(Forme line : lignes) {
-            graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
+        if((lignes != null) && (lignes.size() > 0)){
+           for(Forme line : lignes) {
+                graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
+            } 
         }
 
+        // on redessinne tous les précédents polylignes 
+        if((polylignes != null) && (polylignes.size() > 0)){
+            for(ArrayList<Forme> p : polylignes) {
+                for(Forme l : p) {
+                    graphic.drawLine(l.x1, l.y1, l.x2, l.y2);
+                }
+            }
+        }
+        
         drawable.drawImage(mon_image, 0, 0, null);
     }
 /*

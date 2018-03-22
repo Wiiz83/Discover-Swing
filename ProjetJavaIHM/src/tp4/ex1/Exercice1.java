@@ -138,7 +138,7 @@ public final class Exercice1 extends javax.swing.JFrame implements MouseListener
 
                     break;
                 case Drawing :
-                    aireDeDessin1.drawPreview(e.getPoint());
+                    aireDeDessin1.dessinerRouge(e.getPoint());
                     break;
         }
     }
@@ -151,7 +151,7 @@ public final class Exercice1 extends javax.swing.JFrame implements MouseListener
                     break;
                 case Drawing :
                     etat = Etat.StandBy;
-                    aireDeDessin1.drawFinish();
+                    aireDeDessin1.dessinerNoir();
                     break;
         }
     }

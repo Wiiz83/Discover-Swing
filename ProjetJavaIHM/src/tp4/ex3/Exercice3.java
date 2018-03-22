@@ -14,29 +14,17 @@ import tp4.Forme;
 /**
  *
  * @author uzanl
- * 
- * Exercice 3 : Application de dessin
- * 
-L’application suivante permet à ses utilisateurs de dessiner trois formes géométriques.
-L’utilisateur doit d’abord sélectionner l’une des trois formes possibles grâce à la palette (représentée par les trois
-boutons de droite).
-Dans la zone de dessin (rectangle entouré de noir), l’utilisateur doit ensuite
-presser le bouton gauche de la souris, déplacer le curseur et relâcher la souris. 
-La forme choisie est alors affichée dans la zone de dessin pendant le déplacement (forme temporaire) 
-puis lorsque le bouton est relâché (forme définitive).
-Appliquer la démarche de conception d’un système interactif étudiée en cours pour développer une cette application
- * 
  */
 public class Exercice3 extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
 
     /**
-     * Creates new form Exercice2
+     * Creates new form Exercice3
      */
     public Exercice3() {
         initComponents();
-        aireDeDessin1.addMouseListener(this);
-        aireDeDessin1.addMouseMotionListener(this);
-        aireDeDessin1.type = Forme.Type.Ligne;
+        airDeDessin1.addMouseListener(this);
+        airDeDessin1.addMouseMotionListener(this);
+        airDeDessin1.type = Forme.Type.Ligne;
     }
 
     /**
@@ -48,100 +36,91 @@ public class Exercice3 extends javax.swing.JFrame implements MouseListener, Mous
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        aireDeDessin1 = new tp4.ex3.AireDeDessin();
-        jPanel1 = new javax.swing.JPanel();
+        airDeDessin1 = new tp4.ex3.AirDeDessin();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        aireDeDessin1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        airDeDessin1.setBackground(new java.awt.Color(255, 255, 255));
+        airDeDessin1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout aireDeDessin1Layout = new javax.swing.GroupLayout(aireDeDessin1);
-        aireDeDessin1.setLayout(aireDeDessin1Layout);
-        aireDeDessin1Layout.setHorizontalGroup(
-            aireDeDessin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
+        javax.swing.GroupLayout airDeDessin1Layout = new javax.swing.GroupLayout(airDeDessin1);
+        airDeDessin1.setLayout(airDeDessin1Layout);
+        airDeDessin1Layout.setHorizontalGroup(
+            airDeDessin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 267, Short.MAX_VALUE)
         );
-        aireDeDessin1Layout.setVerticalGroup(
-            aireDeDessin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+        airDeDessin1Layout.setVerticalGroup(
+            airDeDessin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Ligne");
+        jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cercle");
+        jButton2.setText("jButton2");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Rectangle");
+        jButton3.setText("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(aireDeDessin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(airDeDessin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(aireDeDessin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)
+                        .addGap(0, 187, Short.MAX_VALUE))
+                    .addComponent(airDeDessin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        aireDeDessin1.type = Forme.Type.Ligne;
+        airDeDessin1.type = Forme.Type.Ligne;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        aireDeDessin1.type = Forme.Type.Cercle;
+        airDeDessin1.type = Forme.Type.Cercle;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        aireDeDessin1.type = Forme.Type.Rectangle;
+        airDeDessin1.type = Forme.Type.Rectangle;
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -170,9 +149,6 @@ public class Exercice3 extends javax.swing.JFrame implements MouseListener, Mous
             java.util.logging.Logger.getLogger(Exercice3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -181,55 +157,50 @@ public class Exercice3 extends javax.swing.JFrame implements MouseListener, Mous
             }
         });
     }
-    
-    
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private tp4.ex3.AireDeDessin aireDeDessin1;
+    private tp4.ex3.AirDeDessin airDeDessin1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    
+       
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(SwingUtilities.isLeftMouseButton(e)){
-            aireDeDessin1.setOrigin(e.getPoint());
+       if(SwingUtilities.isLeftMouseButton(e)){
+           airDeDessin1.setOrigin(e.getPoint());
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        aireDeDessin1.drawFinish();
+        airDeDessin1.drawFinish();
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-    
+        
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-    
+        
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if(SwingUtilities.isLeftMouseButton(e)){
-            aireDeDessin1.drawPreview(e.getPoint());
+       if(SwingUtilities.isLeftMouseButton(e)){
+           airDeDessin1.drawPreview(e.getPoint());
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-    
+       
     }
 }

@@ -190,6 +190,7 @@ public final class Exercice2 extends javax.swing.JFrame implements MouseListener
                     etat = Etat.DrawingNewLine;
                     aireDeDessin1.effacerPoint();
                     aireDeDessin1.desincCompteur();
+                    aireDeDessin1.dessinerRouge(e.getPoint());
                     break;
             }
         }

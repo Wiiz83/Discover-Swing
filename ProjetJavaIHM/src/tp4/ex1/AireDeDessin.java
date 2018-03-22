@@ -6,7 +6,6 @@
 package tp4.ex1;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -14,19 +13,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import tp4.Forme;
 
-/**
- *
- * @author uzanl
- */
 public class AireDeDessin extends javax.swing.JPanel {
     
     private final ArrayList<Forme> lignes = new ArrayList<>();
-    
     BufferedImage mon_image;
     Graphics2D graphic;
     Point origin;
-    int width;
-    int height;
     Forme ligneEnCours;
 
     public AireDeDessin() {
@@ -38,45 +30,37 @@ public class AireDeDessin extends javax.swing.JPanel {
         origin = p;
     }
 
-    public void drawPreview(Point p) {
+    public void dessinerRouge(Point p) {
         ligneEnCours = new Forme(origin.x, origin.y, p.x, p.y, Forme.Type.Ligne);
-        graphic.setPaint(Color.white);
-        graphic.fillRect(p.x, p.y, 10, 10);
         repaint();
     }
     
-    public void drawFinish(){
-        lignes.add(this.ligneEnCours);        
+    public void dessinerNoir(){
+        lignes.add(this.ligneEnCours); 
+        ligneEnCours = null;
         repaint();
     }
-    
 
-    
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-    
         Graphics2D drawable = (Graphics2D) g;
 
-        // On reccupere quelques infos
-        int width = getSize().width;
-        int height = getSize().height;
-
         // on efface tout les dessins
-        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        mon_image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
         graphic = mon_image.createGraphics();
         graphic.setPaint(Color.white);
-        graphic.fillRect(0, 0, width, height);
-       
+        graphic.fillRect(0, 0, getSize().width, getSize().height);
+
+        // on redessinne la ligne en cours de prévisualisation en rouge
         graphic.setPaint(Color.RED);
-        // on redessinne la ligne en cours de prévisualisation 
         if(ligneEnCours != null){
             graphic.drawLine(ligneEnCours.x1, ligneEnCours.y1, ligneEnCours.x2, ligneEnCours.y2);
         }
         
+        // et toutes les lignes terminées en noir
         graphic.setPaint(Color.black);
-        // et toutes les lignes terminées
         if(lignes.size() > 0){
             for(Forme line : lignes) {
                 graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
