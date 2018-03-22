@@ -5,6 +5,10 @@
  */
 package tp4.ex3;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import javax.swing.SwingUtilities;
 import tp4.Forme;
 
 /**
@@ -23,20 +27,16 @@ puis lorsque le bouton est relâché (forme définitive).
 Appliquer la démarche de conception d’un système interactif étudiée en cours pour développer une cette application
  * 
  */
-public class Exercice3 extends javax.swing.JFrame {
+public class Exercice3 extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
 
     /**
      * Creates new form Exercice2
      */
     public Exercice3() {
         initComponents();
-        
-        EcouteurDeSouris listener = new EcouteurDeSouris(aireDeDessin1);
-        EcouteurDeComposant component_listener = new EcouteurDeComposant(aireDeDessin1);
-
-        aireDeDessin1.addComponentListener(component_listener);
-        aireDeDessin1.addMouseListener(listener);
-        aireDeDessin1.addMouseMotionListener(listener);  
+        aireDeDessin1.addMouseListener(this);
+        aireDeDessin1.addMouseMotionListener(this);
+        aireDeDessin1.type = Forme.Type.Ligne;
     }
 
     /**
@@ -181,6 +181,10 @@ public class Exercice3 extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private tp4.ex3.AireDeDessin aireDeDessin1;
@@ -189,4 +193,43 @@ public class Exercice3 extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if(SwingUtilities.isLeftMouseButton(e)){
+            aireDeDessin1.setOrigin(e.getPoint());
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        aireDeDessin1.drawFinish();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if(SwingUtilities.isLeftMouseButton(e)){
+            aireDeDessin1.drawPreview(e.getPoint());
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    
+    }
 }

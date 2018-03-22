@@ -5,25 +5,36 @@
  */
 package tp4.ex1;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import javax.swing.SwingUtilities;
+
 
 /**
  *
  * @author uzanl
  */
-public class Exercice1 extends javax.swing.JFrame {
+public final class Exercice1 extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
 
-    /**
-     * Creates new form Exercice1
-     */
+    public enum Etat {StandBy, Drawing};
+    public Etat etat;
+    
     public Exercice1() {
         initComponents();
+        aireDeDessin1.addMouseListener(this);
+        aireDeDessin1.addMouseMotionListener(this);
+        etat = Etat.StandBy;
+        presentationStandBy();
+    }
+    
+    //
+    public void presentationStandBy() {
         
-        EcouteurDeSouris listener = new EcouteurDeSouris(aireDeDessin1);
-        EcouteurDeComposant component_listener = new EcouteurDeComposant(aireDeDessin1);
-        
-        aireDeDessin1.addComponentListener(component_listener);
-        aireDeDessin1.addMouseListener(listener);
-        aireDeDessin1.addMouseMotionListener(listener);
+    }
+    
+    //
+    public void presentationDrawing() {
         
     }
 
@@ -103,4 +114,67 @@ public class Exercice1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private tp4.ex1.AireDeDessin aireDeDessin1;
     // End of variables declaration//GEN-END:variables
+
+
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if(SwingUtilities.isLeftMouseButton(e)){
+            switch(etat){
+                case StandBy :
+                    etat = Etat.Drawing;
+                    aireDeDessin1.setOrigin(e.getPoint());
+                    break;
+                case Drawing :
+                    break;
+            }
+        }
+    }
+    
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        switch(etat){
+                case StandBy :
+
+                    break;
+                case Drawing :
+                    aireDeDessin1.drawPreview(e.getPoint());
+                    break;
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        switch(etat){
+                case StandBy :
+
+                    break;
+                case Drawing :
+                    etat = Etat.StandBy;
+                    aireDeDessin1.drawFinish();
+                    break;
+        }
+    }
+    
+ 
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    
+    }
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    
+    }
 }

@@ -30,7 +30,8 @@ public class AireDeDessin extends javax.swing.JPanel {
     Forme ligneEnCours;
     boolean drawFirstPoint;
     boolean drawEndPoint;
-
+    int compteur;
+    
     public AireDeDessin() {
         mon_image = null;
         origin = null;
@@ -38,56 +39,58 @@ public class AireDeDessin extends javax.swing.JPanel {
         drawEndPoint = false;
     }
     
-    public void lineStart(Point p) {
+    public void initCompteur(){
+        this.compteur = 0;
+    }
+    
+    public void incCompteur(){
+        this.compteur++;
+    }
+    
+    public void desincCompteur(){
+        this.compteur--;
+    }
+    
+    /*
+    Si c'est le premier point du polyligne : l'origine est le premier point 
+    Sinon, l'origine est le point de la fin de la dernière ligne
+    */
+    public void ajouterPoint(Point p){
         if(drawFirstPoint == true){
-            origin = p;  // on fait le premier point de la figure et donc de la première ligne
+            origin = p;
             drawFirstPoint = false;
         } else {
-            origin = new Point(ligneEnCours.x2, ligneEnCours.y2); // le point de la fin de la dernière ligne
+            origin = new Point(ligneEnCours.x2, ligneEnCours.y2);
         }
-
     }
-
-    public void linePreview(Point p) {
+    
+    /*
+    
+    */
+    public void dessinerRouge(Point p){
         ligneEnCours = new Forme(origin.x, origin.y, p.x, p.y, Forme.Type.Ligne);
-        graphic.setPaint(Color.white);
-        graphic.fillRect(p.x, p.y, 10, 10);
         repaint();
     }
     
-    public void lineFinish(){
+    /*
+    La ligne est terminée : on l'ajoute à l'ArrayList de lignes définitives
+    */
+    public void dessinerNoir(){
         lignes.add(this.ligneEnCours);        
         repaint();
     }
     
-    public void drawFinish(){
+    public void effacerPoint(){
+        ligneEnCours = null;
+        Forme derniereLigne = lignes.get(lignes.size() - 1);
+        origin = new Point(derniereLigne.x1, derniereLigne.y1);
+        lignes.remove(lignes.size() - 1);
+        repaint();
+    }
+    
+    public void validerPoints(){
         drawFirstPoint = true;
     }
-    
-    // Un clic droit enlève le dernier point ajouté (excepté le cas où il n’y a qu’un point)
-    public void efface() {
-        if(drawFirstPoint == false){
-            Forme derniereLigne = lignes.get(lignes.size() - 1);
-            origin = new Point(derniereLigne.x1, derniereLigne.y1);
-            lignes.remove(lignes.size() - 1);
-            repaint();
-        }
-    }
-
-    
-    // on redimmensionne // ne fonctionne pas correctement car efface les dessins
-    public void redimensionnement(Dimension d){
-       	width = (int) d.getWidth();
-        height = (int) d.getHeight();
-    	
-        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        graphic = mon_image.createGraphics();
-        
-        graphic.setPaint(Color.white);
-        graphic.fillRect(0, 0, width, height);
-        graphic.setPaint(Color.black);
-    }
-    
 
     @Override
     public void paintComponent(Graphics g) {
@@ -103,14 +106,16 @@ public class AireDeDessin extends javax.swing.JPanel {
         graphic = mon_image.createGraphics();
         graphic.setPaint(Color.white);
         graphic.fillRect(0, 0, width, height);
-        graphic.setPaint(Color.black);
+        
        
         // on redessinne la ligne en cours de prévisualisation 
+        graphic.setPaint(Color.RED);
         if(ligneEnCours != null){
             graphic.drawLine(ligneEnCours.x1, ligneEnCours.y1, ligneEnCours.x2, ligneEnCours.y2);
         }
-
+        
         // et toutes les lignes terminées
+        graphic.setPaint(Color.black);
         for(Forme line : lignes) {
             graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
         }

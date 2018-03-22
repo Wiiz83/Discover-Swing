@@ -50,18 +50,7 @@ public class AireDeDessin extends javax.swing.JPanel {
         repaint();
     }
     
-    // on redimmensionne // ne fonctionne pas correctement car efface les dessins
-    public void redimensionnement(Dimension d){
-       	width = (int) d.getWidth();
-        height = (int) d.getHeight();
-    	
-        mon_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        graphic = mon_image.createGraphics();
-        
-        graphic.setPaint(Color.white);
-        graphic.fillRect(0, 0, width, height);
-        graphic.setPaint(Color.black);
-    }
+
     
 
     @Override
@@ -79,16 +68,19 @@ public class AireDeDessin extends javax.swing.JPanel {
         graphic = mon_image.createGraphics();
         graphic.setPaint(Color.white);
         graphic.fillRect(0, 0, width, height);
-        graphic.setPaint(Color.black);
        
+        graphic.setPaint(Color.RED);
         // on redessinne la ligne en cours de prévisualisation 
         if(ligneEnCours != null){
             graphic.drawLine(ligneEnCours.x1, ligneEnCours.y1, ligneEnCours.x2, ligneEnCours.y2);
         }
-
+        
+        graphic.setPaint(Color.black);
         // et toutes les lignes terminées
-        for(Forme line : lignes) {
-            graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
+        if(lignes.size() > 0){
+            for(Forme line : lignes) {
+                graphic.drawLine(line.x1, line.y1, line.x2, line.y2);
+            }
         }
 
         drawable.drawImage(mon_image, 0, 0, null);

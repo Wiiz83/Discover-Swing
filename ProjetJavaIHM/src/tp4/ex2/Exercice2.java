@@ -5,8 +5,12 @@
  */
 package tp4.ex2;
 
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -27,33 +31,29 @@ Appliquer la démarche de conception d’un système interactif étudiée en cou
 cette application
  * 
  */
-public class Exercice2 extends javax.swing.JFrame {
+public final class Exercice2 extends javax.swing.JFrame implements MouseListener, MouseMotionListener, KeyListener {
 
-    /**
-     * Creates new form Exercice2
-     */
+    public enum Etat {StandBy, CreateNewPolyline, DrawingNewLine};
+    public Etat etat;
+    
     public Exercice2() {
         initComponents();
-        
-        EcouteurDeSouris listener = new EcouteurDeSouris(aireDeDessin1);
-        EcouteurDeComposant component_listener = new EcouteurDeComposant(aireDeDessin1);
+        aireDeDessin1.addMouseListener(this);
+        aireDeDessin1.addMouseMotionListener(this);
+        addKeyListener(this);
+        etat = Etat.StandBy;
+        presentationStandBy();
+    }
 
-        aireDeDessin1.addComponentListener(component_listener);
-        aireDeDessin1.addMouseListener(listener);
-        aireDeDessin1.addMouseMotionListener(listener);
+    public void presentationStandBy() {
+        
+    }
 
+    public void presentationCreateNewPolyline() {
         
-        KeyAdapter ka = new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // figure terminée !
-                if(e.getKeyCode() == KeyEvent.VK_SPACE){
-                   aireDeDessin1.drawFinish();
-                }    
-            } 
-        };
-        
-        addKeyListener(ka);
+    }
+    
+    public void presentationDrawingNewLine() {
         
     }
 
@@ -133,4 +133,112 @@ public class Exercice2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private tp4.ex2.AireDeDessin aireDeDessin1;
     // End of variables declaration//GEN-END:variables
+
+
+    
+    
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        switch(etat){
+            case StandBy :
+                etat = Etat.StandBy;
+                break;
+            case CreateNewPolyline :
+                etat = Etat.CreateNewPolyline;
+                aireDeDessin1.dessinerRouge(e.getPoint());
+                break;
+            case DrawingNewLine :
+                etat = Etat.DrawingNewLine;
+                aireDeDessin1.dessinerRouge(e.getPoint());
+                break;
+        }  
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if(SwingUtilities.isLeftMouseButton(e)){
+            switch(etat){
+                case StandBy :
+                    etat = Etat.CreateNewPolyline;
+                    aireDeDessin1.ajouterPoint(e.getPoint());
+                    aireDeDessin1.initCompteur();
+                    break;
+                case CreateNewPolyline :
+                    etat = Etat.DrawingNewLine;
+                    aireDeDessin1.ajouterPoint(e.getPoint());
+                    aireDeDessin1.dessinerNoir();
+                    aireDeDessin1.incCompteur();
+                    break;
+                case DrawingNewLine :
+                    etat = Etat.DrawingNewLine;
+                    aireDeDessin1.ajouterPoint(e.getPoint());
+                    aireDeDessin1.dessinerNoir();
+                    aireDeDessin1.incCompteur();
+                    break;
+            }
+        }
+        
+        if(SwingUtilities.isRightMouseButton(e)){
+            switch(etat){
+                case StandBy :
+                    etat = Etat.StandBy;
+                    break;
+                case CreateNewPolyline :
+                    etat = Etat.CreateNewPolyline;
+                    break;
+                case DrawingNewLine :
+                    etat = Etat.DrawingNewLine;
+                    aireDeDessin1.effacerPoint();
+                    aireDeDessin1.desincCompteur();
+                    break;
+            }
+        }
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+           switch(etat){
+                case StandBy :
+                    etat = Etat.StandBy;
+                    break;
+                case CreateNewPolyline :
+                    etat = Etat.CreateNewPolyline;
+                    break;
+                case DrawingNewLine :
+                    etat = Etat.StandBy;
+                    aireDeDessin1.validerPoints();
+                    break;
+            } 
+        }
+    }
+    
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+    
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+    
+   @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        
+    }
 }

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 public class Ampoule extends JPanel{
     
     private Color couleurOn;
-    private Color couleurOff = Color.WHITE;
+    private final Color couleurOff = Color.WHITE;
     private boolean on = false;
 
     public void setCouleurOn(Color couleurOn) {

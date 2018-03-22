@@ -14,11 +14,14 @@ import javax.swing.Timer;
  */
 public final class Exercice1 extends javax.swing.JFrame {
 
-    private final Timer timerPanne = new Timer(1000, this::timerPanneActionPerformed);
-    private final Timer timerEnMarche = new Timer(1000, this::timerEnMarcheActionPerformed);    
+    private final Timer timerMarcheRouge = new Timer(2000, this::timerMarcheRougeActionPerformed);
+    private final Timer timerMarcheVert = new Timer(3000, this::timerMarcheVertActionPerformed);
+    private final Timer timerMarcheOrange = new Timer(1500, this::timerMarcheOrangeActionPerformed);
+    private final Timer timerPanneOrange = new Timer(1000, this::timerPanneOrangeActionPerformed);
+    private final Timer timerPanneEteind = new Timer(500, this::timerPanneEteindActionPerformed); 
+   
     public enum Etat {E1, E2, E3, E4, E5, E6};
     public Etat etat;
-    public int compteur;
     
     /**
      * Creates new form Exercice1
@@ -31,7 +34,16 @@ public final class Exercice1 extends javax.swing.JFrame {
         etat = Etat.E6;
         presentationE6();
     }
+    
+    public void stopAllTimers(){
+        timerMarcheRouge.stop();
+        timerMarcheVert.stop();
+        timerMarcheOrange.stop();
+        timerPanneOrange.stop();
+        timerPanneEteind.stop();
+    }
 
+    // Vert
     public void presentationE1() {
         this.GreenLight.allumer();
         this.RedLight.eteindre();
@@ -39,8 +51,10 @@ public final class Exercice1 extends javax.swing.JFrame {
         this.PlayButton.setEnabled(false);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(true);
+        stopAllTimers();
+        timerMarcheVert.start();
     }
-
+    // Orange
     public void presentationE2() {
         this.GreenLight.eteindre();
         this.RedLight.eteindre();
@@ -48,8 +62,10 @@ public final class Exercice1 extends javax.swing.JFrame {
         this.PlayButton.setEnabled(false);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(true);
+        stopAllTimers();
+        timerMarcheOrange.start();
     }
-    
+    // Rouge
     public void presentationE3() {
         this.GreenLight.eteindre();
         this.RedLight.allumer();
@@ -57,30 +73,32 @@ public final class Exercice1 extends javax.swing.JFrame {
         this.PlayButton.setEnabled(false);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(true);
-        timerPanne.stop();
-        timerEnMarche.start();
+        stopAllTimers();
+        timerMarcheRouge.start();
     }
-    
+    // Panne tout éteind 
     public void presentationE4() {
         this.GreenLight.eteindre();
         this.RedLight.eteindre();
         this.OrangeLight.eteindre();
-        this.PlayButton.setEnabled(false);
+        this.PlayButton.setEnabled(true);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(false);
+        stopAllTimers();
+        timerPanneEteind.start();
     }
-
+    // Panne orange allumé
     public void presentationE5() {
         this.GreenLight.eteindre();
         this.RedLight.eteindre();
         this.OrangeLight.allumer();
-        this.PlayButton.setEnabled(false);
+        this.PlayButton.setEnabled(true);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(false);
-        timerEnMarche.stop();
-        timerPanne.start();
+        stopAllTimers();
+        timerPanneOrange.start();
     }
-    
+    // STOP
     public void presentationE6() {
         this.GreenLight.eteindre();
         this.RedLight.eteindre();
@@ -88,8 +106,7 @@ public final class Exercice1 extends javax.swing.JFrame {
         this.PlayButton.setEnabled(true);
         this.StopButton.setEnabled(false);
         this.PanneButton.setEnabled(false);
-        timerPanne.stop();
-        timerEnMarche.stop();
+        stopAllTimers();
     }
 
     /**
@@ -210,19 +227,20 @@ public final class Exercice1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void timerEnMarcheActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    
+    /*
+    Le feu Rouge (E3) s'allume pendant 2 secondes puis passe au Vert (E1)
+    */
+    private void timerMarcheRougeActionPerformed(java.awt.event.ActionEvent evt) {                                         
         switch(etat){
             case E1 :
-                etat = Etat.E2;
-                presentationE2();
                 break;
             case E2 :
-                etat = Etat.E3;
-                presentationE3();
                 break;
             case E3 :
                 etat = Etat.E1;
                 presentationE1();
+                
                 break;
             case E4 :
                 break;
@@ -232,8 +250,73 @@ public final class Exercice1 extends javax.swing.JFrame {
                 break;
         }
     } 
-
-    private void timerPanneActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    /*
+    Le feu Vert (E1) s'allume pendant 3 secondes puis passe à Orange (E2)
+    */
+    private void timerMarcheVertActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        switch(etat){
+            case E1 :
+                etat = Etat.E2;
+                presentationE2();
+                break;
+            case E2 :
+                break;
+            case E3 :
+                break;
+            case E4 :
+                break;
+            case E5 :
+                break;
+            case E6 :
+                break;
+        }
+    } 
+    /*
+    Le feu Orange s'allume (E2) pendant 1.5 seconde puis passe au Rouge (E3)
+    */
+    private void timerMarcheOrangeActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        switch(etat){
+            case E1 :
+                break;
+            case E2 :
+                etat = Etat.E3;
+                presentationE3();
+                break;
+            case E3 :
+                break;
+            case E4 :
+                break;
+            case E5 :
+                break;
+            case E6 :
+                break;
+        }
+    } 
+    /*
+    Le feu orange de la panne (E5) s'allume pendant 1 seconde puis passe à tout éteind (E4)
+    */
+    private void timerPanneOrangeActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        switch(etat){
+            case E1 :
+                break;
+            case E2 :
+                break;
+            case E3 :
+                break;
+            case E4 :
+                break;
+            case E5 :
+                etat = Etat.E4;
+                presentationE4();
+                break;
+            case E6 :
+                break;
+        }
+    } 
+    /*
+    Tous les feux sont éteind (E4) pour la panne pendant 0.5 seconde puis passe au Orange Panne (E5)
+    */
+    private void timerPanneEteindActionPerformed(java.awt.event.ActionEvent evt) {                                         
         switch(etat){
             case E1 :
                 break;
@@ -246,13 +329,12 @@ public final class Exercice1 extends javax.swing.JFrame {
                 presentationE5();
                 break;
             case E5 :
-                etat = Etat.E4;
-                presentationE4();
                 break;
             case E6 :
                 break;
         }
     } 
+    
 
     private void StopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopButtonActionPerformed
         switch(etat){
@@ -277,6 +359,8 @@ public final class Exercice1 extends javax.swing.JFrame {
                 presentationE6();
                 break;
             case E6 :
+                etat = Etat.E6;
+                presentationE6();
                 break;
         }
     }//GEN-LAST:event_StopButtonActionPerformed
@@ -296,10 +380,16 @@ public final class Exercice1 extends javax.swing.JFrame {
                 presentationE5();
                 break;
             case E4 :
+                etat = Etat.E5;
+                presentationE5();
                 break;
             case E5 :
+                etat = Etat.E5;
+                presentationE5();
                 break;
             case E6 :
+                etat = Etat.E5;
+                presentationE5();
                 break;
         }
     }//GEN-LAST:event_PanneButtonActionPerformed
@@ -307,10 +397,16 @@ public final class Exercice1 extends javax.swing.JFrame {
     private void PlayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayButtonActionPerformed
         switch(etat){
             case E1 :
+                etat = Etat.E3;
+                presentationE3();
                 break;
             case E2 :
+                etat = Etat.E3;
+                presentationE3();
                 break;
             case E3 :
+                etat = Etat.E3;
+                presentationE3();
                 break;
             case E4 :
                 etat = Etat.E3;

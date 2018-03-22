@@ -406,7 +406,7 @@ public final class Exercice3 extends javax.swing.JFrame {
             case E8 :
                 break;
             case E9 :
-                if(compteur > 4){
+                if(compteur >= 4){
                     etat = Etat.E2;
                     presentationE2();
                 } else {
