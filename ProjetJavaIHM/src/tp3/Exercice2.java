@@ -48,9 +48,6 @@ public final class Exercice2 extends javax.swing.JFrame {
 
     //VERT
     public void presentationE1() {
-        this.GreenLight.allumer();
-        this.RedLight.eteindre();
-        this.OrangeLight.eteindre();
         this.PlayButton.setEnabled(false);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(true);
@@ -59,9 +56,6 @@ public final class Exercice2 extends javax.swing.JFrame {
     }
     //ORANGE
     public void presentationE2() {
-        this.GreenLight.eteindre();
-        this.RedLight.eteindre();
-        this.OrangeLight.allumer();
         this.PlayButton.setEnabled(false);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(true);
@@ -70,9 +64,6 @@ public final class Exercice2 extends javax.swing.JFrame {
     }
     //ROUGE
     public void presentationE3() {
-        this.GreenLight.eteindre();
-        this.RedLight.allumer();
-        this.OrangeLight.eteindre();
         this.PlayButton.setEnabled(false);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(true);
@@ -81,9 +72,6 @@ public final class Exercice2 extends javax.swing.JFrame {
     }
     //PANNE TOUT ETEIND
     public void presentationE4() {
-        this.GreenLight.eteindre();
-        this.RedLight.eteindre();
-        this.OrangeLight.eteindre();
         this.PlayButton.setEnabled(true);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(false);
@@ -92,9 +80,6 @@ public final class Exercice2 extends javax.swing.JFrame {
     }
     //PANNE ORANGE
     public void presentationE5() {
-        this.GreenLight.eteindre();
-        this.RedLight.eteindre();
-        this.OrangeLight.allumer();
         this.PlayButton.setEnabled(true);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(false);
@@ -103,9 +88,6 @@ public final class Exercice2 extends javax.swing.JFrame {
     }
     //STOP
     public void presentationE6() {
-        this.GreenLight.eteindre();
-        this.RedLight.eteindre();
-        this.OrangeLight.eteindre();
         this.PlayButton.setEnabled(true);
         this.StopButton.setEnabled(false);
         this.PanneButton.setEnabled(false);
@@ -113,9 +95,6 @@ public final class Exercice2 extends javax.swing.JFrame {
     }
     //ROUGE ORANGE 
     public void presentationE7() {
-        this.GreenLight.eteindre();
-        this.RedLight.allumer();
-        this.OrangeLight.allumer();
         this.PlayButton.setEnabled(false);
         this.StopButton.setEnabled(true);
         this.PanneButton.setEnabled(true);
@@ -249,6 +228,9 @@ public final class Exercice2 extends javax.swing.JFrame {
             case E2 :
                 break;
             case E3 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.allumer();
                 etat = Etat.E7;
                 presentationE7();
                 break;
@@ -281,6 +263,9 @@ public final class Exercice2 extends javax.swing.JFrame {
                 break;
             case E7 :
                 etat = Etat.E1;
+                this.GreenLight.allumer();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 presentationE1();
                 break;
         }
@@ -292,6 +277,9 @@ public final class Exercice2 extends javax.swing.JFrame {
         switch(etat){
             case E1 :
                 etat = Etat.E2;
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 presentationE2();
                 break;
             case E2 :
@@ -317,6 +305,9 @@ public final class Exercice2 extends javax.swing.JFrame {
                 break;
             case E2 :
                 etat = Etat.E3;
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 presentationE3();
                 break;
             case E3 :
@@ -345,6 +336,9 @@ public final class Exercice2 extends javax.swing.JFrame {
             case E4 :
                 break;
             case E5 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E4;
                 presentationE4();
                 break;
@@ -366,6 +360,9 @@ public final class Exercice2 extends javax.swing.JFrame {
             case E3 :
                 break;
             case E4 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
@@ -384,30 +381,51 @@ public final class Exercice2 extends javax.swing.JFrame {
     private void StopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopButtonActionPerformed
         switch(etat){
             case E1 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E6;
                 presentationE6();
                 break;
             case E2 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E6;
                 presentationE6();
                 break;
             case E3 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E6;
                 presentationE6();
                 break;
             case E4 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E6;
                 presentationE6();
                 break;
             case E5 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E6;
                 presentationE6();
                 break;
             case E6 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E6;
                 presentationE6();
                 break;
             case E7 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.eteindre();
                 etat = Etat.E6;
                 presentationE6();
                 break;
@@ -417,30 +435,51 @@ public final class Exercice2 extends javax.swing.JFrame {
     private void PanneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanneButtonActionPerformed
         switch(etat){
             case E1 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
             case E2 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
             case E3 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
             case E4 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
             case E5 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
             case E6 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
             case E7 :
+                this.GreenLight.eteindre();
+                this.RedLight.eteindre();
+                this.OrangeLight.allumer();
                 etat = Etat.E5;
                 presentationE5();
                 break;
@@ -450,30 +489,51 @@ public final class Exercice2 extends javax.swing.JFrame {
     private void PlayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayButtonActionPerformed
         switch(etat){
             case E1 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 etat = Etat.E3;
                 presentationE3();
                 break;
             case E2 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 etat = Etat.E3;
                 presentationE3();
                 break;
             case E3 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 etat = Etat.E3;
                 presentationE3();
                 break;
             case E4 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 etat = Etat.E3;
                 presentationE3();
                 break;
             case E5 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 etat = Etat.E3;
                 presentationE3();
                 break;
             case E6 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 etat = Etat.E3;
                 presentationE3();
                 break;
             case E7 :
+                this.GreenLight.eteindre();
+                this.RedLight.allumer();
+                this.OrangeLight.eteindre();
                 etat = Etat.E3;
                 presentationE3();
                 break;

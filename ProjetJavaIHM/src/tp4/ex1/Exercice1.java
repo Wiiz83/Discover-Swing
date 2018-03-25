@@ -125,7 +125,7 @@ public final class Exercice1 extends javax.swing.JFrame implements MouseListener
                     etat = Etat.Drawing;
                     aireDeDessin1.setOrigin(e.getPoint());
                     break;
-                case Drawing :
+                case Drawing ://impossible
                     break;
             }
         }
