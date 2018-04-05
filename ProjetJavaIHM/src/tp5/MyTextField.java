@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5.ex1;
+package tp5;
 
-import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
- * @author mcj1099a
+ * @author uzanl
  */
-public class MyJlabel extends JLabel implements View{
+public class MyTextField extends JTextField implements View {
 
     @Override
     public void notify(int value) {
-        setText(""+value);
+        this.setText(String.valueOf(value));
     }
     
 }

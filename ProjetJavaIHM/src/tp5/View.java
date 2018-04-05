@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5.ex1;
+package tp5;
 
 /**
  *
- * @author mcj1099a
+ * @author uzanl
  */
 public interface View {
     void notify(int value);
